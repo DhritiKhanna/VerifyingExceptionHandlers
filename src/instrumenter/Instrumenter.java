@@ -1,5 +1,6 @@
 package instrumenter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.StringTokenizer;
 
 import soot.Body;
 import soot.BodyTransformer;
+import soot.BooleanType;
 import soot.IntType;
 import soot.Local;
 import soot.RefType;
@@ -18,6 +20,7 @@ import soot.Unit;
 import soot.Value;
 import soot.ValueBox;
 import soot.VoidType;
+import soot.JastAddJ.AssertStmt;
 import soot.javaToJimple.LocalGenerator;
 import soot.jimple.AssignStmt;
 import soot.jimple.BinopExpr;
@@ -36,6 +39,7 @@ import soot.jimple.LtExpr;
 import soot.jimple.NeExpr;
 import soot.jimple.NewExpr;
 import soot.jimple.NopStmt;
+import soot.jimple.OrExpr;
 import soot.jimple.SpecialInvokeExpr;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
@@ -43,19 +47,27 @@ import soot.jimple.ThrowStmt;
 import soot.jimple.internal.JAssignStmt;
 import soot.jimple.internal.JInvokeStmt;
 import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.toolkits.graph.ExceptionalUnitGraph.ExceptionDest;
 import soot.toolkits.graph.UnitGraph;
 import soot.util.Chain;
 
 public class Instrumenter extends BodyTransformer 
 {
+	public static int[] linenos;
 	Body body;
+	LocalGenerator generator;
+	
+	Instrumenter(int[] linenos) {
+		Instrumenter.linenos = linenos;
+	}
 	
 	@Override
 	protected void internalTransform(Body methodBody, String arg1, Map arg2) {
 		body = methodBody;
+		generator = new LocalGenerator(body);
 		SootMethod sootMethod = body.getMethod();
 		if(!sootMethod.getName().contains("$")) {
-			UnitGraph g = new ExceptionalUnitGraph(sootMethod.getActiveBody());
+			UnitGraph ug = new ExceptionalUnitGraph(sootMethod.getActiveBody());
 
 			SootMethod method = body.getMethod();
 		    // debugging
@@ -69,8 +81,12 @@ public class Instrumenter extends BodyTransformer
 		    // typical while loop for iterating over each statement
 		    while (stmtIt.hasNext()) {
 		    	// cast back to a statement.
-		    	Stmt s = (Stmt)stmtIt.next();
-		    	
+		    	Unit unit = (Unit) stmtIt.next();
+		    		    	
+		    	Stmt s = (Stmt)unit;
+
+		    	int lineno = s.getTag("LineNumberTag")!=null ? Integer.parseInt(s.getTag("LineNumberTag").toString()) : 0;
+		    			    	
 		    	if(s instanceof JInvokeStmt) {
 					System.out.println("~~~~~~~~~~Invoke statement: " + ((JInvokeStmt)s).getInvokeExpr().getMethod().getDeclaration());
 					SootMethod m = ((JInvokeStmt)s).getInvokeExpr().getMethod();
@@ -92,12 +108,13 @@ public class Instrumenter extends BodyTransformer
 								String exception = str.nextToken();
 								System.out.println("~~~~~~~~~~Exception: " + exception);
 								// instrument the throw here
-								instrument(exception, s);
+								instrument(exception, s, lineno);
 							}
 						}
 					}
 				}
-//				Collection<ExceptionDest> l = ug.getExceptionDests((Unit)unit);
+//		    	System.out.println("Statement: " + s);
+//				Collection<ExceptionDest> l = ((ExceptionalUnitGraph) ug).getExceptionDests(unit);
 //				//List<Unit> l = ug.getExceptionalSuccsOf((Unit)unit);
 //				Iterator<ExceptionDest> i = l.iterator();
 //				while(i.hasNext()) {
@@ -105,7 +122,9 @@ public class Instrumenter extends BodyTransformer
 //					//Unit e = (Unit) i.next();
 //					if(e.getTrap()!=null)
 //					{	
-//						System.out.println("Trap::::::::::::::: " + e.getTrap().getException() + "\n");
+//						System.out.println("Trap::::::::::::::: " + e.getTrap().getException());
+//						System.out.println("Begin unit: " + e.getTrap().getBeginUnit());
+//						System.out.println("End unit: " + e.getTrap().getEndUnit() + "\n");
 //					}
 //				}
 		    }	
@@ -118,22 +137,37 @@ public class Instrumenter extends BodyTransformer
 	 * @param s the statement before which an exception is to be thrown
 	 * @param methodBody insert the statement inside this methodBody
 	 */
-	private void instrument(String exceptionType, Stmt s) {
+	private void instrument(String exceptionType, Stmt s, int lineno) {
 		// Add if(false) {
-		LocalGenerator generator = new LocalGenerator(body);
-		Value intCounter = generator.generateLocal(IntType.v());
-		AssignStmt assignStmt = new JAssignStmt(intCounter, IntConstant.v(0));
+		Value linenumber = generator.generateLocal(IntType.v());
+		AssignStmt assignStmt = new JAssignStmt(linenumber, IntConstant.v(lineno));
 		body.getUnits().insertBefore(assignStmt, s);
-		IfStmt ifStmt = Jimple.v().newIfStmt(Jimple.v().newEqExpr(intCounter, IntConstant.v(1)), s);
-		body.getUnits().insertBefore(ifStmt, s);
 		
+		NopStmt nopBeforeIfs = Jimple.v().newNopStmt();
+		body.getUnits().insertBefore(nopBeforeIfs, s);
+		NopStmt nopBeforeException = Jimple.v().newNopStmt();
+		body.getUnits().insertAfter(nopBeforeException, nopBeforeIfs);
+		NopStmt nopEnd = Jimple.v().newNopStmt();
+		body.getUnits().insertBefore(nopEnd, s);		
+		
+		int numberOfValues = linenos.length;
+		List<Unit> newUnits = new ArrayList<Unit>();
+		for(int i=0; i<numberOfValues-1; ++i) {
+			IfStmt ifStmt = Jimple.v().newIfStmt(Jimple.v().newEqExpr(linenumber, IntConstant.v(linenos[i])), nopBeforeException);
+			newUnits.add(ifStmt);
+		}
+		IfStmt ifStmt = Jimple.v().newIfStmt(Jimple.v().newNeExpr(linenumber, IntConstant.v(linenos[numberOfValues-1])), s);
+		newUnits.add(ifStmt);
+		
+		body.getUnits().insertAfter(newUnits, nopBeforeIfs);
+				
 		// Add assert false: "point to be hit"
-		//createAssert(body);
-		
+		//createAssert(body, s, nopAfter);
+				
 		// Add the throw Stmt
 		Local l = Jimple.v().newLocal("localToBeThrown", RefType.v(exceptionType));
 		body.getLocals().add(l);
-		List<Unit> newUnits = new ArrayList<Unit>();
+		newUnits = new ArrayList<Unit>();
 		Unit u1 = Jimple.v().newAssignStmt(l, Jimple.v().newNewExpr(RefType.v(exceptionType)));
 		Unit u2 = Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(l,
 		          			Scene.v().makeMethodRef(Scene.v().getSootClass(exceptionType), "<init>",
@@ -142,42 +176,30 @@ public class Instrumenter extends BodyTransformer
 		newUnits.add(u1);
 		newUnits.add(u2);
 		newUnits.add(u3);
-		body.getUnits().insertBefore(newUnits, s);
+		body.getUnits().insertAfter(newUnits, nopBeforeException);
 		
 		// Comment out the function call
-		body.getUnits().remove(s);
+		//body.getUnits().remove(s);
 	}
 	
 	// Code inspired from https://www.javatips.net/api/soot-master/src/soot/javaToJimple/JimpleBodyBuilder.java 
-	private void createAssert(Body body) {
+	private void createAssert(Body body, Stmt s, Stmt nop) {
 	    // check if assertions are disabled
-	    Local testLocal = Jimple.v().newLocal("testLocal", soot.BooleanType.v());
-        body.getLocals().add(testLocal);
+		Local testLocal = generator.generateLocal(BooleanType.v());
 	    soot.SootFieldRef assertField = soot.Scene.v().makeFieldRef(body.getMethod().getDeclaringClass(), "$assertionsDisabled", soot.BooleanType.v(), true);
 	    FieldRef assertFieldRef = Jimple.v().newStaticFieldRef(assertField);
 	    AssignStmt fieldAssign = Jimple.v().newAssignStmt(testLocal, assertFieldRef);
-	    body.getUnits().add(fieldAssign);
-	    NopStmt nop1 = Jimple.v().newNopStmt();
+	    body.getUnits().insertBefore(fieldAssign, s);
+	    
 	    ConditionExpr cond1 = Jimple.v().newNeExpr(testLocal, IntConstant.v(0));
-	    IfStmt testIf = Jimple.v().newIfStmt(cond1, nop1);
-	    body.getUnits().add(testIf);
-	    // actual cond test
-        soot.Value sootCond = IntConstant.v(0);
-        boolean needIf = needSootIf(sootCond);
-        if (!(sootCond instanceof ConditionExpr)) {
-            sootCond = Jimple.v().newEqExpr(sootCond, IntConstant.v(1));
-        } 
-        if (needIf) {
-            // add if
-            IfStmt ifStmt = Jimple.v().newIfStmt(sootCond, nop1);
-            body.getUnits().add(ifStmt);
-        }
+	    IfStmt testIf = Jimple.v().newIfStmt(cond1, nop);
+	    body.getUnits().insertBefore(testIf, s);
 	    // assertion failure code
-	    soot.Local failureLocal = Jimple.v().newLocal("failureLocal", soot.RefType.v("java.lang.AssertionError"));
-        body.getLocals().add(failureLocal);
+	    Local failureLocal = generator.generateLocal(soot.RefType.v("java.lang.AssertionError"));
 	    NewExpr newExpr = Jimple.v().newNewExpr(soot.RefType.v("java.lang.AssertionError"));
 	    AssignStmt newAssign = Jimple.v().newAssignStmt(failureLocal, newExpr);
-	    body.getUnits().add(newAssign);
+	    body.getUnits().insertBefore(newAssign, s);
+	    
 	    soot.SootMethodRef methToInvoke;
 	    ArrayList paramTypes = new ArrayList();
 	    ArrayList params = new ArrayList();
@@ -186,28 +208,17 @@ public class Instrumenter extends BodyTransformer
         if (errorExpr instanceof ConditionExpr) {
             errorExpr = handleCondBinExpr((ConditionExpr) errorExpr);
         }
-        paramTypes.add(soot.CharType.v());
+        paramTypes.add(soot.RefType.v("java.lang.Object"));
         params.add(errorExpr);
 	  
 	    methToInvoke = soot.Scene.v().makeMethodRef(soot.Scene.v().getSootClass("java.lang.AssertionError"), "<init>", paramTypes, soot.VoidType.v(), false);
 	    SpecialInvokeExpr invokeExpr = Jimple.v().newSpecialInvokeExpr(failureLocal, methToInvoke, params);
 	    InvokeStmt invokeStmt = Jimple.v().newInvokeStmt(invokeExpr);
-	    body.getUnits().add(invokeStmt);
+	    body.getUnits().insertBefore(invokeStmt, s);
 	    
 	    ThrowStmt throwStmt = Jimple.v().newThrowStmt(failureLocal);
-	    body.getUnits().add(throwStmt);
-	    // end
-	    body.getUnits().add(nop1);
+	    body.getUnits().insertBefore(throwStmt, s);
 	}
-	
-	private boolean needSootIf(soot.Value sootCond){
-        if (sootCond instanceof IntConstant){
-            if (((IntConstant)sootCond).value == 1){
-                return false;
-            }
-        }
-        return true;
-    } 
 	
 	private soot.Local handleCondBinExpr(ConditionExpr condExpr) {
 	    
@@ -329,6 +340,7 @@ public class Instrumenter extends BodyTransformer
     
         return cond;
     }
+    
     private boolean isDouble(soot.Value val) {
         if (val.getType() instanceof soot.DoubleType) return true;
         return false;

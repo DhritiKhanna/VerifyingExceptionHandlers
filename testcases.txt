@@ -1,0 +1,19 @@
+# All the test cases are to be provided on a new line. To comment out a test case, start the line with #.
+# For Lucene 2
+#test.LCN2Test::testcase1
+# For Eclipse Paho1
+#test.PAH1Test::testcase1
+# For ZRMQ
+#test.ZRMQTest::testcase1
+# For Flink
+#test.FLNKTest::testClosingWithBlockedEmitter
+# For Guava 
+#test.GUAVTest::testcase1
+# For Eclipse Paho2
+#test.PAH2Test::testcase2
+# For Log4j
+test.LOGJTest::testcase1
+# For Java Mail
+#test.JVMLTest::testcase1 
+#test.MultiThreadedTest::testcase
+#test.Test::testcase1

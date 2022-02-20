@@ -41,7 +41,7 @@ public class Test {
 	private static int z;
 	LinkedList<Example> allocationQueue;
 
-	Test() {
+	public Test() {
 		allocationQueue = new LinkedList<Example>();
 	}
 
@@ -83,27 +83,33 @@ public class Test {
 	}
 	
 	public int bar(int param) {
+		int a=0;
 		try {
-			int [] a = new int[param];
-			a[2] = param;
-			wait();
-			try {
-				foo();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			//int [] a = new int[param];
+			//a[2] = param; 
+			a = param*2; 
+			synchronized(this) {
+				wait();
 			}
+//			try {
+//				foo();				
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			return 10 / param;
-		}
+		}	
 		catch(InterruptedException i) {
-			return -1;
+			z = a*4;
+			return z;
 		}
-		catch(ArrayIndexOutOfBoundsException a) {
+		catch(ArrayIndexOutOfBoundsException e) {
 			return -1;
 		}
 		catch(ArithmeticException n) {
 			return -1;
 		}
+		//return -1;
 	}
 
 	public void test(int x, int y) throws InterruptedException {
@@ -114,26 +120,26 @@ public class Test {
 		Example example = new Example();
 		Example ex = new Example();
 		example = ex;
-		example.point = new Point();
-		ex.point = example.point;
-		Point p = example.point;
+//		example.point = new Point();
+//		ex.point = example.point;
+//		Point p = example.point;
 		System.out.println(ex);
 		allocationQueue.add(example);
 		
-		if (z > 1) {
+		if (z==1 || z==2 || z==3) {
 	        if ((2*(z-y)) > 0) {
 	        	int sdf = x-y;
 	        } else {
 	        	synchronized(this) {
-	        		throw new InterruptedException();
-	        		//wait();
+	        		//throw new InterruptedException();
+	        		wait();
 	        	}
 	        }
 		}
 		else {
 			synchronized(this) {
 	        	notify();
-	        	assert false: "point to be hit";
+	        	//assert false: "point to be hit";
 	        }
 		}
 		/*int i = 0;
@@ -142,5 +148,28 @@ public class Test {
 			allocationQueue.add(example); // The Example object created above may escape out of the method by being added into allocationQueue
 		}
 		*/
+	}
+	
+	public void testcase1() {
+		Test t = new Test();
+		try {
+			t.test(1, 2);
+		} catch(InterruptedException r) {}
+	}
+	
+	public void testcase2() { // This test case is to see if we can mock the exceptions properly, and to know how are try-catch blocks handled in JVM
+		Test t = new Test();
+		t.bar(1); 
+	}
+	
+	public void simpleTestCase() { // This test case is to see if all the events are properly being trapped
+		
+	}
+	
+	public static void main(String[] args) {
+		Test t = new Test();
+		try {
+			t.test(1, 2);
+		} catch(InterruptedException r) {}
 	}
 }
