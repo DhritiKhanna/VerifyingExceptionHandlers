@@ -17,12 +17,13 @@ import gov.nasa.jpf.Config;
 import gov.nasa.jpf.JPF;
 import gov.nasa.jpf.util.Pair;
 import main.Main;
+import util.ConcExecStateInfo;
 import util.RunningCommand;
 
 public class Driver {
 	
 	HashMap<Integer, ArrayList<Pair<String, Integer>>> filePositionConditionValueForThread;
-	ArrayList<Pair<Integer, Integer>> threadChoiceValueForStateID;
+	ArrayList<ConcExecStateInfo> threadChoiceValueForStateID;
 	String testcase;
 	
 	public Driver() {}
@@ -239,7 +240,7 @@ public class Driver {
 		try {
         	FileInputStream fileIn = new FileInputStream("./temp/threadSchedule.txt");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            threadChoiceValueForStateID = (ArrayList<Pair<Integer, Integer>>) in.readObject();
+            threadChoiceValueForStateID = (ArrayList<ConcExecStateInfo>) in.readObject();
             in.close();
             fileIn.close();
         }
@@ -253,10 +254,10 @@ public class Driver {
 		// Display the schedule choices arraylist: for debugging
 		System.out.print("Thread choices in storeThreadSchedule: ");
 		if(threadChoiceValueForStateID != null) {
-			Iterator<Pair<Integer, Integer>> threadChoiceValueForStateIDIt = threadChoiceValueForStateID.iterator();
+			Iterator<ConcExecStateInfo> threadChoiceValueForStateIDIt = threadChoiceValueForStateID.iterator();
 			while(threadChoiceValueForStateIDIt.hasNext()) {
-				Pair<Integer, Integer> pair = threadChoiceValueForStateIDIt.next();
-				System.out.print("<" + pair._1 + ", " + pair._2 + "> ");
+				ConcExecStateInfo c = threadChoiceValueForStateIDIt.next();
+				System.out.print("<" + c.getStateID() + ", " + c.getThreadID() + ", " + c.getInstructionsExecutedInState() + "> ");
 			}
 		}
 		// Delete the file after you have read data from it.
@@ -268,7 +269,7 @@ public class Driver {
     	return filePositionConditionValueForThread;
     }
 	
-	public ArrayList<Pair<Integer, Integer>> getThreadChoiceValueForStatID() {
+	public ArrayList<ConcExecStateInfo> getThreadChoiceValueForStatID() {
 		return threadChoiceValueForStateID;
 	}
 }

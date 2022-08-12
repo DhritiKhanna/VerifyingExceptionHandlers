@@ -20,6 +20,8 @@ import gov.nasa.jpf.vm.Pi;
 
 import gov.nasa.jpf.util.Pair;
 
+import util.ConcExecStateInfo;
+
 public class Driver {
 	
 	String testcase;
@@ -31,7 +33,7 @@ public class Driver {
 		path = new Path();
 	}
 	
-	public void run(HashMap<Integer, ArrayList<Pair<String, Integer>>> concretePathCondition, ArrayList<Pair<Integer, Integer>> threadSchedule) { 
+	public void run(HashMap<Integer, ArrayList<Pair<String, Integer>>> concretePathCondition, ArrayList<ConcExecStateInfo> threadSchedule) { 
 		runJPF(concretePathCondition, threadSchedule);
 		storeSymbolicInformation();
 	}
@@ -40,7 +42,7 @@ public class Driver {
 	/**
 	 * Runs the symbolic executor JPF
 	 */ 
-	public void runJPF(HashMap<Integer, ArrayList<Pair<String, Integer>>> concretePathCondition, ArrayList<Pair<Integer, Integer>> threadSchedule) { 
+	public void runJPF(HashMap<Integer, ArrayList<Pair<String, Integer>>> concretePathCondition, ArrayList<ConcExecStateInfo> threadSchedule) { 
 		// Append Concrete Path Condition in the Config file
 		// The concrete path condition is in the form of pairs of string, boolean: file position and the truth value
 		String jpfFileName = "temp/TestDriver" + ".jpf";
@@ -68,10 +70,10 @@ public class Driver {
 			
 			str = new StringBuilder("");
 			if(threadSchedule != null) {
-				Iterator<Pair<Integer, Integer>> threadScheduleIt = threadSchedule.iterator();
+				Iterator<ConcExecStateInfo> threadScheduleIt = threadSchedule.iterator();
 				while(threadScheduleIt.hasNext()) {
-					Pair<Integer, Integer> pair = threadScheduleIt.next();
-					str.append(pair._1 + ":" + pair._2 + ";");
+					ConcExecStateInfo c = threadScheduleIt.next();
+					str.append(c.getStateID() + ":" + c.getThreadID() + ";");
 				}
 			}
 			System.out.println("Property thread_schedule: " + str);
@@ -87,7 +89,7 @@ public class Driver {
 		String [] props = {"temp/TestDriver.jpf"};
 		Config c = JPF.createConfig(props);
 		JPF jpf = new JPF(c);
-		EventListener eventListener = new EventListener(c, jpf);
+		EventListener eventListener = new EventListener(c, jpf, threadSchedule);
 		//SymbolicListener symbcListener = new SymbolicListener(c, jpf);
 		jpf.addListener(eventListener);
 		//jpf.addListener(symbcListener);
@@ -106,7 +108,11 @@ public class Driver {
         try {
         	jpf.run();
 		} 
-        catch(Exception e) { System.out.println(e); }
+        catch(Exception e) 
+        { 
+        	System.setOut(originalOut); // Reset to original
+        	System.out.println(e);
+        }
         finally {
         	System.setOut(originalOut); // Reset to original
         }

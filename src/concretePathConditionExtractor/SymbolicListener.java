@@ -54,6 +54,7 @@ import gov.nasa.jpf.symbc.numeric.SymbolicConstraintsGeneral;
 import gov.nasa.jpf.symbc.numeric.SymbolicInteger;
 import gov.nasa.jpf.util.Pair;
 import gov.nasa.jpf.vm.ChoiceGenerator;
+import gov.nasa.jpf.vm.Envelope;
 import gov.nasa.jpf.vm.Instruction;
 import gov.nasa.jpf.vm.MethodInfo;
 import gov.nasa.jpf.vm.SystemState;
@@ -62,7 +63,9 @@ import gov.nasa.jpf.vm.ThreadInfo;
 import gov.nasa.jpf.vm.Types;
 import gov.nasa.jpf.vm.VM;
 import gov.nasa.jpf.vm.choice.ThreadChoiceFromSet;
+
 import main.Main;
+import util.ConcExecStateInfo;
 
 public class SymbolicListener extends PropertyListenerAdapter implements PublisherExtension {
 
@@ -73,7 +76,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
 
 	private String target;
 	private HashMap<Integer, ArrayList<Pair<String, Integer>>> filePositionConditionValueForThread;
-	private ArrayList<Pair<Integer, Integer>> threadChoiceValueForStateID;
+	private ArrayList<ConcExecStateInfo> threadSchedule;
 	
     private Map<String, MethodSummary> allSummaries;
     private String currentMethodName = "";
@@ -84,7 +87,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
         
         target = conf.getString("target");
 		filePositionConditionValueForThread = new HashMap<Integer, ArrayList<Pair<String, Integer>>>();
-		threadChoiceValueForStateID = new ArrayList<Pair<Integer, Integer>>();
+		threadSchedule = new ArrayList<ConcExecStateInfo>();
     }
 
     // Writes the method summaries to a file for use in another application
@@ -169,11 +172,11 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     }
     
     public void instructionExecuted(VM vm, ThreadInfo currentThread, Instruction nextInstruction, Instruction executedInstruction) {
-    	
+  
     	if (vm.getSystemState().isIgnored())
     		return;
     	
-		Instruction lastIns = executedInstruction;
+    	Instruction lastIns = executedInstruction;
 		MethodInfo methodInfo = lastIns.getMethodInfo();
 		
 		// TODO: Checking the instructions to scan on the package granularity level.
@@ -193,13 +196,13 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
 		// These breaks sometimes forces an instruction to be re-executed
 		if (lastIns.isCompleted(ti)) {
 			
-//			if(currentThread.getId() == 5)
-				System.out.println(currentThread.getId() + " ~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
+			System.out.println(currentThread.getExecutedInstructions() + " " + currentThread.getId() + " ~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
+					
 //			if(lastIns instanceof GETFIELD && ((GETFIELD) lastIns).getFieldName().equals("running"))
 //				System.out.println(currentThread.getId() + " ~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
 //			if(lastIns instanceof PUTFIELD && ((PUTFIELD) lastIns).getFieldName().equals("running"))
 //				System.out.println(currentThread.getId() + " ~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
-//			
+			
 			if(lastIns instanceof IfInstruction) {
 				IfInstruction ifInstruction = (IfInstruction) lastIns;
 				System.out.println("This is an if instruction: " + !ifInstruction.getConditionValue() + " with bytecode: " + ifInstruction.getByteCode()
@@ -683,7 +686,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
     	try {
             FileOutputStream fileOut = new FileOutputStream("./temp/threadSchedule.txt");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(threadChoiceValueForStateID);  
+            out.writeObject(threadSchedule);  
             out.close();
             fileOut.close();
         }
@@ -699,10 +702,27 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
       
       ChoiceGenerator<?> cg = ss.getChoiceGenerator();
       if(cg instanceof ThreadChoiceGenerator) {
-    	  System.out.println("State advanced; <stateid, runningthreadID>: " + ss.getId() + " " + ((ThreadChoiceFromSet)cg).getNextChoice().getId());
-    	  // Store the state ID and the thread choice taken in that state
-    	  threadChoiceValueForStateID.add(new Pair<Integer, Integer>(ss.getId(), ((ThreadChoiceFromSet)cg).getNextChoice().getId()));
+    	  System.out.println("State advanced; <stateid, threadID, executedInstructions>: " + (ss.getId()-1) + " " + 
+    			  															ss.getExecThread().getId()/*((ThreadChoiceFromSet)cg).getNextChoice().getId()*/ + " " +
+    			  															ss.getExecThread().getExecutedInstructions());
+    	  // Store the number of executed instructions in this transition to the last object of the threadSchedule
+//    	  ConcExecStateInfo last = threadSchedule.remove(threadSchedule.size()-1);
+//    	  last.setInstructionsExecutedInState(ss.getExecThread().getExecutedInstructions());
+//    	  threadSchedule.add(last);
+    	  
+    	  // Store the state ID, the thread choice taken in that state
+    	  ConcExecStateInfo stateInfo = new ConcExecStateInfo();
+    	  stateInfo.setStateID(ss.getId()-1);
+    	  stateInfo.setThreadID(ss.getExecThread().getId());
+    	  //stateInfo.setNextThreadID(((ThreadChoiceFromSet)cg).getNextChoice().getId());
+    	  stateInfo.setInstructionsExecutedInState(ss.getExecThread().getExecutedInstructions());
+    	  threadSchedule.add(stateInfo);
       }
+    }
+    
+    @Override
+    public void stateBacktracked(Search search) {
+      System.out.println("Backtracking: " + search.getStateId());
     }
     
     @Override
@@ -710,7 +730,7 @@ public class SymbolicListener extends PropertyListenerAdapter implements Publish
       SystemState ss = search.getVM().getSystemState();
       
       // Store the state ID and the thread choice taken in that state
-      threadChoiceValueForStateID.add(new Pair<Integer, Integer>(ss.getId(), ss.getExecThread().getId()));
+      //threadSchedule.add(new ConcExecStateInfo(ss.getId(), ss.getExecThread().getId(), -1)); // We will update the executedInstructions when the state is advanced
     }
 
     protected class MethodSummary {

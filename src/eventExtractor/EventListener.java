@@ -59,6 +59,7 @@ import gov.nasa.jpf.vm.VM;
 import gov.nasa.jpf.vm.bytecode.FieldInstruction;
 import gov.nasa.jpf.vm.bytecode.ReturnInstruction;
 import main.Main;
+import util.ConcExecStateInfo;
 
 public class EventListener extends PropertyListenerAdapter implements PublisherExtension {
 
@@ -68,6 +69,8 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
      */
     private Map<String, MethodSummary> allSummaries;
     private String currentMethodName = "";
+    
+    private int currentlyExecutingTransitionInstructionCount; 
 
     // DK
     HashMap<String, Object> symbolicInfo; // Content of the information for its name
@@ -83,7 +86,7 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
     int heapVarCount; // The variables initialized through the heap have to be provided a temporary name till they are stored. This counter will be used to provide unique names to the heap variables like arrays. See the NEWARRAY insn for reference.
     String nameOfThread;
     Map<String, String> classNameToThreadName;
-	ArrayList<Pair<Integer, Integer>> threadChoiceValueForStateID;
+	ArrayList<ConcExecStateInfo> threadSchedule;
 	HashMap<Integer, Stack<String>> methodMonitorForThreadID;
     // DK
 
@@ -92,7 +95,7 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
     volatile private int depth;
     volatile private int id;
 
-    public EventListener(Config conf, JPF jpf) {
+    public EventListener(Config conf, JPF jpf, ArrayList<ConcExecStateInfo> threadSchedule) {
     	
         jpf.addPublisherExtension(ConsolePublisher.class, this);
         allSummaries = new HashMap<String, MethodSummary>();
@@ -112,8 +115,9 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
 		heapVarCount = 0;
 		nameOfThread = null;
 		classNameToThreadName = new HashMap<String, String>();
-		threadChoiceValueForStateID = new ArrayList<Pair<Integer, Integer>>();
+		this.threadSchedule = threadSchedule;
 		methodMonitorForThreadID = new HashMap<Integer, Stack<String>>();
+		currentlyExecutingTransitionInstructionCount = threadSchedule.get(0).getInstructionsExecutedInState(); // Executed instructions in the first transition
         // Some trivia
         //methodInfo.getFullName(); // Returns Test.test(II)V
         //methodInfo.getName(); // Returns test
@@ -216,15 +220,20 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
     	if (vm.getSystemState().isIgnored())
     		return;
     	
+    	// Break the ongoing transition if the number of instructions have reached the count stored during concrete execution
+    	if(currentThread.getExecutedInstructions() == currentlyExecutingTransitionInstructionCount) {
+    		vm.getSystemState().breakTransAccToConcExec = true;
+    		// Update currentlyExecutingTransitionInstructionCount
+    		System.out.println("Breaking the transition " + currentlyExecutingTransitionInstructionCount + " " + currentThread.getExecutedInstructions());
+    	}
+    	
 		Instruction lastIns = executedInstruction;
 		MethodInfo methodInfo = lastIns.getMethodInfo();
 		
     	if(!(Main.contains(methodInfo.getClassInfo().getName()) || methodInfo.getClassInfo().getName().equals(target)))
     		return;    		
 
-    	System.out.println("~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
-    	    		
-		ThreadInfo ti = currentThread;	// Information regarding the thread that executed the last instruction
+    	ThreadInfo ti = currentThread;	// Information regarding the thread that executed the last instruction
 		String tid = ti.getName();
 		MethodInfo mi = lastIns.getMethodInfo(); // Information regarding the method to which the last instruction belongs
 		
@@ -236,6 +245,8 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
 		// We always need to check whether the instruction is completed or not in order to avoid transition breaks
 		// These breaks sometimes forces an instruction to be re-executed
 		if (lastIns.isCompleted(ti)) {
+			System.out.println(currentThread.getExecutedInstructions() + " " + currentThread.getId() + "~~~~~~~~~~~~~~~~~~~ Instruction: " + lastIns + " from method: " + methodInfo.getFullName());
+    		
 			int line = lastIns.getLineNumber();
 			String file = lastIns.getFileLocation();
 
@@ -400,7 +411,7 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
 	            	System.out.println("There might be a problem, field info is null!");
 	            	return;
 	            }
-	            System.out.println("A PUTSTATIC instruction: " /*+ i.getFieldInfo().getName() + " " + i.getFieldInfo().getType() + " " + i.getClassInfo().getName() + " " + operands.peek()*/);
+	            //System.out.println("A PUTSTATIC instruction: " /*+ i.getFieldInfo().getName() + " " + i.getFieldInfo().getType() + " " + i.getClassInfo().getName() + " " + operands.peek()*/);
 	            
                 Pair<String, String> var = new Pair<String, String>(className + "." + varName, dataType);
                 if(!path.isEmpty()) {
@@ -980,7 +991,7 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
     public void stateAdvanced(Search search)  {
       SystemState ss = search.getVM().getSystemState();
       
-      //path.push(ss); // DK --> Since JPF works with a single state and keeps making changes in that state only, this operation is just pushing that state 
+      path.push(ss); // DK --> Since JPF works with a single state and keeps making changes in that state only, this operation is just pushing that state 
       // What we have to do is push a snapshot of the state comprising the locks and state-id. 
       // But then this pushed state will be a different state from the one where actually locks are getting acquired and released (ss).
       SystemState newState = ss.cloneState(); // This is in reality creating a new state with the same id as the one to which it is advanced to; cloneState is a superficial name
@@ -1000,6 +1011,18 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
       if (search.isEndState()) {
         detail += " end";
       }
+      
+      int i = 1;
+		while(i < threadSchedule.size()-1) {
+			ConcExecStateInfo concStateInfo = threadSchedule.get(i);
+			int temp1 = concStateInfo.getStateID();
+			int temp2 = ss.getId();
+			if(concStateInfo.getStateID() == ss.getId()) {
+				break;
+			}
+			i++;
+		}
+		currentlyExecutingTransitionInstructionCount = threadSchedule.get(i).getInstructionsExecutedInState();
     }
 
     @Override
@@ -1008,9 +1031,6 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
         SystemState ss = path.pop(); System.out.println("Popping: " + ss.getId());
         if(!path.isEmpty()) {
           ss = path.pop();
-          if(ss.getId() == 33) {
-        	  System.out.println(ss.runningThreadId);
-          }
           System.out.println("Going to state: " + ss.getId());
           /*if(!path.isEmpty() && reverseConditions.get(path.peek().getId()) != null) {
             SystemState peeked = path.pop();

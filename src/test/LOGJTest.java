@@ -58,7 +58,7 @@ public class LOGJTest {
     logToKillDispatcher(dispatcherLatch);
 
     // Wait for logging thread to be done
-    endLatch.await(10L, TimeUnit.SECONDS);
+    endLatch.await(1L, TimeUnit.SECONDS);
 
     //assertThat("Logging should have been done", endLatch.getCount(), is(0L));
   }
