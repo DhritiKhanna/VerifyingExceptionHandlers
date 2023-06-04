@@ -102,8 +102,8 @@ public class Main {
 	public static boolean contains(String name) {
 //		if(name.startsWith("com.sun.mail.imap"))
 //			return true;
-		if(name.startsWith("org.eclipse.paho.client.mqttv3"))
-			return true;
+//		if(name.startsWith("org.eclipse.paho.client.mqttv3"))
+//			return true;
 		if (classDependencies==null || classDependencies.size()==0)
 			return false;
     	

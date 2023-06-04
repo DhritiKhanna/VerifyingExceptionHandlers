@@ -1,8 +1,8 @@
 public class TestDriver {
 	public static void main(String[] args) {
 		 try {
-			 test.LOGJTest e = new test.LOGJTest();
-			 e.testcase1();
+			 test.PAH2Test e = new test.PAH2Test();
+			 e.testcase2();
 		 } catch (RuntimeException e1) {
 			 e1.printStackTrace();
 		 }

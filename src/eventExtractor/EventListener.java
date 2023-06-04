@@ -736,6 +736,7 @@ public class EventListener extends PropertyListenerAdapter implements PublisherE
 				}
 			}
     	}
+		System.out.println("Next instruction: " + nextInstruction);
     }
     
     private Object extractWrittenValue(VM vm, FieldInstruction insn, ElementInfo ei) {

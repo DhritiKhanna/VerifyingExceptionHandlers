@@ -20,8 +20,8 @@ import java.util.HashMap;
 
 public class Symbolic {
 
-	static int maxInt = 1000000;
-	static int minInt = -1000000;
+	static int maxInt = 0; //1000000;
+	static int minInt = 20; //-1000000;
 	static double minDouble = -8;
 	static double maxDouble = 7;
 

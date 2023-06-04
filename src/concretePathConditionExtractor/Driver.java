@@ -142,7 +142,7 @@ public class Driver {
 			bufferedWriter.write("symbolic.dp=z3" + "\n");
 			//bufferedWriter.write("symbolic.arrays=true" + "\n");
 			bufferedWriter.write("symbolic.collect_constraints=true" + "\n");
-			bufferedWriter.write("search.multiple_errors=true" + "\n");	
+			//bufferedWriter.write("search.multiple_errors=true" + "\n");	
 			//bufferedWriter.write("search.depth_limit=500" + "\n");
 			bufferedWriter.write("cg.enumerate_random=true" + "\n");
 			bufferedWriter.write("cg.randomize_choices=VAR_SEED" + "\n");

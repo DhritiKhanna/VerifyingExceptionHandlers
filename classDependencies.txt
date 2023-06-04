@@ -1,9 +1,9 @@
 test.Test
 #test.MultiThreadedTest
 #test.JVMLTest, com.sun.mail.imap
-test.LOGJTest
-org.apache.log4j.AsyncAppender
-#test.PAH2Test, org.eclipse.paho.client.mqttv3.internal.CommsCallback
+#test.LOGJTest, org.apache.log4j.AsyncAppender
+test.PAH2Test
+org.eclipse.paho.client.mqttv3.internal.CommsCallback
 #test.GUAVTest, com.google.common.util.concurrent.AbstractScheduledService, com.google.common.util.concurrent.AbstractService
 #test.FLNKTest, org.apache.flink.streaming.api.operators.async
 #test.ZRMQTest, org.zeromq
