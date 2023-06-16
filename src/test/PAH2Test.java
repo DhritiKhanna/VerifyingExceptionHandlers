@@ -94,8 +94,8 @@ class Deadlock implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		System.out.println("Message arrived: " + new String(message.getPayload()));
 		Thread.sleep(5000);
-		//throw new RuntimeException("deadlock");
-		throw new MqttException(0);
+		throw new RuntimeException("deadlock");
+//		throw new MqttException(0);
 	}
 
 	@Override

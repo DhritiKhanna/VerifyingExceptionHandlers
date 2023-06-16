@@ -10,9 +10,9 @@
 # For Guava 
 #test.GUAVTest::testcase1
 # For Eclipse Paho2
-#test.PAH2Test::testcase2
+test.PAH2Test::testcase2
 # For Log4j
-test.LOGJTest::testcase1
+#test.LOGJTest::testcase1
 # For Java Mail
 #test.JVMLTest::testcase1 
 #test.MultiThreadedTest::testcase

@@ -1,0 +1,138 @@
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: runstart from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.[run]
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.[run]
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ldc from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_1 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: goto 240 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifne 6 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.workAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.workAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: dup from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: monitorenter from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: monitorenter from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.messageQueue from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.messageQueue from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.Vector.isEmpty()Z from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.Vector.isEmpty()Z from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iand from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 61 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.completeQueue from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.completeQueue from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.Vector.isEmpty()Z from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.Vector.isEmpty()Z from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 61 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.log from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.log from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic org.eclipse.paho.client.mqttv3.internal.CommsCallback.className from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic org.eclipse.paho.client.mqttv3.internal.CommsCallback.className from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ldc from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ldc from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokeinterface org.eclipse.paho.client.mqttv3.logging.Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iconst_5 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_3 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokespecial org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level; from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: tableswitch from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic java.util.logging.Level.FINE from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic java.util.logging.Level.FINE from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: goto 90 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: areturn from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore 7 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.logging.JSR47Logger.julLogger from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.logging.JSR47Logger.julLogger from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload 7 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.logging.Logger.isLoggable(Ljava/util/logging/Level;)Z from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: istore 8 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload 8 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 45 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: return  org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: return  org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.workAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.workAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.lang.Object.wait()V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: monitorexit from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: goto 70 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 147 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.quiescing from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 162 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.spaceAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: dup from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: monitorenter from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.log from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic org.eclipse.paho.client.mqttv3.internal.CommsCallback.className from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ldc from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ldc from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokeinterface org.eclipse.paho.client.mqttv3.logging.Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iconst_5 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_3 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokespecial org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level; from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aconst_null from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload_1 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: tableswitch from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getstatic java.util.logging.Level.FINE from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: goto 90 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: areturn from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.mapJULLevel(I)Ljava/util/logging/Level;
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: astore 7 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.logging.JSR47Logger.julLogger from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload 7 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.util.logging.Logger.isLoggable(Ljava/util/logging/Level;)Z from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: istore 8 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: iload 8 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifeq 45 from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: return  org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.trace(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;Ljava/lang/Throwable;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: return  org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V from method: org.eclipse.paho.client.mqttv3.logging.JSR47Logger.fine(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.spaceAvailable from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: invokevirtual java.lang.Object.notifyAll()V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_2 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: monitorexit from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: goto 240 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: aload_0 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: getfield org.eclipse.paho.client.mqttv3.internal.CommsCallback.running from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: ifne 6 from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: return  org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.run()V
+5 ~~~~~~~~~~~~~~~~~~~ Instruction: directcallreturn from method: org.eclipse.paho.client.mqttv3.internal.CommsCallback.[run]

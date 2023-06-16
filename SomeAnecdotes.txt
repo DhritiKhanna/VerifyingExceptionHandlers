@@ -1,0 +1,10 @@
+VM.forward() --> SystemState.executeNextTransition() --> SystemState.setExecThread() --> ThreadChoiceGenerator.getNextChoice()
+
+searchFinished is writing a DS (formed during the execution) in a file
+file is read in the driver storePC to store it into a data structure (where it is also printed for debugging)
+This data structure is fetched and parsed and sent as a property string in the driver of symbolic execution
+Can we remove the middle step of file writing and reading?
+
+Apart from GETFIELD, PUTFIELD, GETSTATIC, PUTSTATIC, I am storing these events:
+MonitorEnter, MonitorExit, 
+
